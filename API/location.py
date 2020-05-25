@@ -17,27 +17,29 @@ def generate_actions(operationType, index):
         }
         yield newDoc
 
+client = Elasticsearch(
+    ELASTIC_SEARCH_END_POINT,
+    http_auth=(USERNAME, PASSWORD),
+    port=PORT,
+)
 
-def create_index(client, index):
+INDEX = LOCATION_MAPPING
+OPERATION_TYPE = 'index'
+
+def create_index():
     client.indices.create(
-        index=index,
+        index=INDEX,
         body=MAPPINGS
     )
 
+def delete_index():
+    client.indices.delete(index=INDEX)
 
 def main():
     number_of_docs = len(DATA)
-    INDEX = LOCATION_MAPPING
-    OPERATION_TYPE = 'index'
-
-    client = Elasticsearch(
-        ELASTIC_SEARCH_END_POINT,
-        http_auth=(USERNAME, PASSWORD),
-        port=PORT,
-    )
 
     if (client.indices.exists(index=INDEX) == False):
-        create_index(client, INDEX)
+        create_index()
 
     progress = tqdm.tqdm(unit="docs", total=number_of_docs)
     successes = 0

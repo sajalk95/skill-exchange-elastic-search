@@ -22,8 +22,6 @@ else
 	IPYTHON := ./venv/bin/ipython
 endif
 
-all: run-dev
-
 clean:
 	rm -rf venv && \
 	rm -rf *.log*
@@ -49,32 +47,29 @@ venv: venv-setup
 venv-interactive: venv make-interactive
 
 delete-locations-index:
-	${PYTHON} -m skill_exchange_search.elastic_search.mapping_creations_deletions.locations.delete_mapping
+	${PYTHON} -m API.location.delete_index
 
 create-locations-mapping:
-	${PYTHON} -m API.location
-
-create-locations-data:
-	${PYTHON} -m skill_exchange_search.elastic_search.load_data.location.create_location_data
+	${PYTHON} -m API.location.create_index
 
 load-locations-data:
-	${PYTHON} -m skill_exchange_search.elastic_search.load_data.location.load_location_data
+	${PYTHON} -m API.location
 
 
 delete-jobs-index:
-	${PYTHON} -m skill_exchange_search.elastic_search.mapping_creations_deletions.jobs.delete_mapping
+	${PYTHON} -m API.job.delete_index
 
 create-jobs-mapping:
-	${PYTHON} -m API.jobs
+	${PYTHON} -m API.jobs.create_index
 
 load-jobs-data:
-	${PYTHON} -m skill_exchange_search.elastic_search.load_data.jobs.load_jobs_data
+	${PYTHON} -m API.jobs
 
 delete-candidates-index:
-	${PYTHON} -m skill_exchange_search.elastic_search.mapping_creations_deletions.candidates.delete_mapping
+	${PYTHON} -m API.candidate.delete_index
 
 create-candidates-mapping:
-	${PYTHON} -m API.candidates
+	${PYTHON} -m API.candidate.create_index
 
 load-candidates-data:
-	${PYTHON} -m skill_exchange_search.elastic_search.load_data.candidates.load_candidates_data
+	${PYTHON} -m API.candidate
