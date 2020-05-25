@@ -1,0 +1,4 @@
+elasticsearch
+urllib3
+tqdm
+python-dotenv
