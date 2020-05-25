@@ -7,11 +7,14 @@ from dotenv import load_dotenv
 dotenv_path = join(pathlib.Path().absolute(), '.env')
 load_dotenv(dotenv_path)
 
-DEV_OR_TEST_OR_PROD_LOCALHOST = "dev"
+DEV_OR_TEST_OR_PROD_LOCALHOST = "DEV"
 
 ELASTIC_SEARCH_ENDPOINT_URL = os.getenv('ELASTIC_SEARCH_ENDPOINT_URL')
 
-USERNAME = os.getenv(f'{DEV_OR_TEST_OR_PROD_LOCALHOST}_USERNAME')
-PASSWORD = os.getenv(f'{DEV_OR_TEST_OR_PROD_LOCALHOST}_USER_PASSWORD')
+username = f'{DEV_OR_TEST_OR_PROD_LOCALHOST}_USERNAME'
+password = f'{DEV_OR_TEST_OR_PROD_LOCALHOST}_USER_PASSWORD'
+
+USERNAME = os.getenv(username)
+PASSWORD = os.getenv(password)
 
 PORT = os.getenv('PORT')
