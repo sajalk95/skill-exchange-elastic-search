@@ -30,21 +30,11 @@ install-pip:
 	${PYTHON} -c "from urllib.request import urlopen; print(urlopen('https://bootstrap.pypa.io/get-pip.py').read().decode('utf-8'))" | ${PYTHON}
 
 venv-setup:
-	python3.6 -m venv --without-pip venv
+	python3 -m venv --without-pip venv
 	make install-pip
 
-make-interactive:
-	${PIP} install --prefer-binary ipython pylint pep8 flake8 pydocstyle rope jupyter matplotlib isort
-
-venv-dev: venv-setup
-	${PIP} install -r requirements/dev.txt --prefer-binary
-
-venv-dev-interactive: venv-dev make-interactive
-
 venv: venv-setup
-	${PIP} install -r requirements/prod.txt --prefer-binary
-
-venv-interactive: venv make-interactive
+	${PIP} install -r requirements.txt --prefer-binary
 
 delete-locations-index:
 	${PYTHON} -m API.location.delete_index
@@ -54,7 +44,6 @@ create-locations-mapping:
 
 load-locations-data:
 	${PYTHON} -m API.location
-
 
 delete-jobs-index:
 	${PYTHON} -m API.job.delete_index
