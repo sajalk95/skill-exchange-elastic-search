@@ -36,29 +36,32 @@ venv-setup:
 venv: venv-setup
 	${PIP} install -r requirements.txt --prefer-binary
 
+setup: 
+	${PYTHON} setup.py
+
 delete-locations-index:
-	${PYTHON} -m API.location.delete_index
+	${PYTHON} -m API.delete_index.location
 
 create-locations-mapping:
-	${PYTHON} -m API.location.create_index
+	${PYTHON} -m API.create_mappings.location
 
 load-locations-data:
-	${PYTHON} -m API.location
+	${PYTHON} -m API.load_data.location
 
 delete-jobs-index:
-	${PYTHON} -m API.job.delete_index
+	${PYTHON} -m API.delete_index.job
 
 create-jobs-mapping:
-	${PYTHON} -m API.jobs.create_index
+	${PYTHON} -m API.create_mappings.job
 
 load-jobs-data:
-	${PYTHON} -m API.jobs
+	${PYTHON} -m API.load_data.job
 
 delete-candidates-index:
-	${PYTHON} -m API.candidate.delete_index
+	${PYTHON} -m API.delete_index.candidate
 
 create-candidates-mapping:
-	${PYTHON} -m API.candidate.create_index
+	${PYTHON} -m API.create_mappings.candidate
 
 load-candidates-data:
-	${PYTHON} -m API.candidate
+	${PYTHON} -m API.load_data.candidate
