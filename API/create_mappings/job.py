@@ -1,13 +1,11 @@
 import sys
 setattr(sys.modules[__name__], '__path__', '__path__')
 
-import tqdm
+import bcrypt
 from elasticsearch import Elasticsearch
-from elasticsearch.helpers import streaming_bulk
-from Data.jobs.data_dev import DATA
 from Mappings.job import MAPPINGS
 from constants.jobs.create_mapping import JOBS_MAPPING, ELASTIC_SEARCH_END_POINT
-from settings import USERNAME, PASSWORD, PORT
+from settings import USERNAME, PASSWORD, PORT, pwhash
 
 client = Elasticsearch(
         ELASTIC_SEARCH_END_POINT,
@@ -19,10 +17,15 @@ INDEX = JOBS_MAPPING
 OPERATION_TYPE = 'index'
 
 def create_index():
-    client.indices.create(
-        index=INDEX,
-        body=MAPPINGS
-    )
+    password = input("Enter the password: ")
+    password = password.encode("utf-8")
+    if bcrypt.checkpw(password, pwhash):
+        client.indices.create(
+            index=INDEX,
+            body=MAPPINGS
+        )
+    else:
+        print("Password didn't match")
 
 if __name__ == "__main__":
     create_index()

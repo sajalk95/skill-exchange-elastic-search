@@ -2,12 +2,13 @@ import sys
 setattr(sys.modules[__name__], '__path__', '__path__')
 
 import tqdm
+import bcrypt
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import streaming_bulk
 from Data.jobs.data_dev import DATA
 from Mappings.job import MAPPINGS
 from constants.jobs.create_mapping import JOBS_MAPPING, ELASTIC_SEARCH_END_POINT
-from settings import USERNAME, PASSWORD, PORT
+from settings import USERNAME, PASSWORD, PORT, pwhash
 
 def generate_actions(operationType, index):
     for doc in DATA:
@@ -60,4 +61,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    password = input("Enter the password: ")
+    password = password.encode("utf-8")
+    if bcrypt.checkpw(password, pwhash):
+        main()
+    else:
+        print("Password didn't match")
