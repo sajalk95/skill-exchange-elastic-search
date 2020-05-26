@@ -26,3 +26,4 @@ make load-locations-data
 make load-jobs-data
 make load-candidates-data
 ```
+Note: Load data module creates mappings automatically. So there's no need to create mappings first if only data is to be loaded to elastic search.
